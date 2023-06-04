@@ -27,9 +27,9 @@ fn parse_u64(string: &str) -> u64 {
 fn main() {
     // Declare these variables as strings.
     // for both the first and second things, it'll be converted to a 64-bit integer later
-    let mut first_thing = parse_u64(&read_input("Enter the first number to operate on:"));
-    let mut operator = read_input("Enter your operator");
-    let mut second_thing = parse_u64(&read_input("Enter the second number to operate on:"));
+    let first_thing = parse_u64(&read_input("Enter the first number to operate on:"));
+    let operator = read_input("Enter your operator");
+    let second_thing = parse_u64(&read_input("Enter the second number to operate on:"));
 
     // If it matches a:
     let result = match operator.as_str() {
