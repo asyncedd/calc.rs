@@ -21,7 +21,7 @@ fn read_input(message: &str) -> String {
 fn parse_u64(string: &str) -> u64 {
     string
         .parse()
-        .expect("In valid number")
+        .expect("Invalid number")
 }
 
 fn main() {
