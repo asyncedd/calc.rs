@@ -8,20 +8,17 @@ fn read_input(message: &str) -> String {
     // Declare a new variable
     let mut input = String::new();
     // Read the line
-    io::stdin().read_line(&mut input)
+    io::stdin()
+        .read_line(&mut input)
         // It it fails, error out
         .expect("Failed to read line");
     // return the input variable which will be set on "io::stdin().read_line(&mut input)"
-    input.
-        trim()
-        .to_string()
+    input.trim().to_string()
 }
 
 // A function for parsing strings to a 64-bit integer
 fn parse_f64(string: &str) -> f64 {
-    string
-        .parse()
-        .expect("Invalid number")
+    string.parse().expect("Invalid number")
 }
 
 fn main() {
