@@ -21,11 +21,21 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
+fn is_valid_operator(operator: &str) -> bool {
+    ["+", "-", "*", "/"].contains(&operator)
+}
+
 fn main() {
     // Declare these variables as strings.
     // for both the first and second things, it'll be converted to a 64-bit integer later
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
     let operator = read_input("Enter your operator");
+
+    if !is_valid_operator(operator.trim()) {
+        println!("The string is not a valid operator.");
+        return;
+    }
+
     let second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
 
     // If it matches a:
