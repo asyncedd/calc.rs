@@ -13,6 +13,7 @@ fn read_input(message: &str) -> String {
         .read_line(&mut input)
         // It it fails, error out
         .expect("Failed to read line");
+
     // return the input variable which will be set on "io::stdin().read_line(&mut input)"
     input.trim().to_string()
 }
@@ -22,9 +23,12 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
+// Predefine the operators
+const VALID_OPERATORS: [&str; 6] = ["+", "-", "*", "/", "^", "sqrt"];
+
 // Checks if the operator is a operator that is supported
 fn is_valid_operator(operator: &str) -> bool {
-    ["+", "-", "*", "/", "^", "sqrt"].contains(&operator)
+    VALID_OPERATORS.contains(&operator)
 }
 
 fn main() {
