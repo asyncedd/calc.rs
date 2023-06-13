@@ -1,7 +1,7 @@
 // Use the "io" from the standard library
 use std::io;
 
-// A new fancy variable
+// A fancy new function
 fn read_input(message: &str) -> String {
     // Prints a message
     println!("{}", message);
