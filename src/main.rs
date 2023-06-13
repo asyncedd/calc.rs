@@ -49,7 +49,13 @@ fn main() {
         // "*" multiply
         "*" => first_thing * second_thing,
         // "/" divide
-        "/" => first_thing / second_thing,
+        "/" => {
+            if second_thing == 0.0 || first_thing == 0.0 {
+                println!("Cannot divide by zero.");
+                return;
+            }
+            first_thing / second_thing
+        }
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
