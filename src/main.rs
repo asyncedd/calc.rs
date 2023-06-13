@@ -24,7 +24,7 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 7] = ["+", "-", "*", "/", "^", "sqrt", "sine"];
+const VALID_OPERATORS: [&str; 8] = ["+", "-", "*", "/", "^", "sqrt", "sine", "cosine"];
 
 // Checks if the operator is a operator that is supported
 fn is_valid_operator(operator: &str) -> bool {
@@ -32,7 +32,7 @@ fn is_valid_operator(operator: &str) -> bool {
 }
 
 // Operators that are single
-const SINGLE_OPERATORS: [&str; 2] = ["sqrt", "sine"];
+const SINGLE_OPERATORS: [&str; 3] = ["sqrt", "sine", "cosine"];
 
 // Check if the operators is one defined above
 fn check_if_certain_operator(operator: &str) -> bool {
@@ -48,7 +48,7 @@ fn main() {
     println!("Current calculation: {}", first_thing);
 
     // Get the operator
-    let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt\nPlease enter any of the opreators listed above:");
+    let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt, sine, cosine\nPlease enter any of the opreators listed above:");
     // Trim whitespaces from the operator
     let operator = operator.trim();
 
@@ -103,6 +103,11 @@ fn main() {
 
             angle_radians.sin() // Calculate the sine of the angle
         }
+        "cosine" => {
+            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
+
+            angle_radians.cos() // Calculate the sine of the angle
+        }
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
@@ -111,7 +116,7 @@ fn main() {
     };
 
     // Print the result
-    if operator != "sqrt" {
+    if !check_if_certain_operator(operator) {
         println!(
             "Result: {} {} {} = {}",
             first_thing, operator, second_thing, result
