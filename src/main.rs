@@ -30,8 +30,9 @@ fn main() {
     // for both the first and second things, it'll be converted to a 64-bit integer later
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
     let operator = read_input("Enter your operator");
+    let operator = operator.trim();
 
-    if !is_valid_operator(operator.trim()) {
+    if !is_valid_operator(operator) {
         println!("The string is not a valid operator.");
         return;
     }
@@ -39,7 +40,7 @@ fn main() {
     let second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
 
     // If it matches a:
-    let result = match operator.as_str() {
+    let result = match operator {
         // "+" add
         "+" => first_thing + second_thing,
         // "-" substract
