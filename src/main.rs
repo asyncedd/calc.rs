@@ -24,11 +24,19 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 6] = ["+", "-", "*", "/", "^", "sqrt"];
+const VALID_OPERATORS: [&str; 7] = ["+", "-", "*", "/", "^", "sqrt", "sine"];
 
 // Checks if the operator is a operator that is supported
 fn is_valid_operator(operator: &str) -> bool {
     VALID_OPERATORS.contains(&operator)
+}
+
+// Operators that are single
+const SINGLE_OPERATORS: [&str; 2] = ["sqrt", "sine"];
+
+// Check if the operators is one defined above
+fn check_if_certain_operator(operator: &str) -> bool {
+    SINGLE_OPERATORS.contains(&operator)
 }
 
 fn main() {
@@ -58,7 +66,7 @@ fn main() {
     let second_thing: f64;
 
     // If the opertor isn't "sqrt" then, ask for user input
-    if operator != "sqrt" {
+    if !check_if_certain_operator(operator) {
         second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
 
         // Print the current calculation again
@@ -90,6 +98,11 @@ fn main() {
         }
         "^" => first_thing.powf(second_thing),
         "sqrt" => first_thing.sqrt(),
+        "sine" => {
+            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
+
+            angle_radians.sin() // Calculate the sine of the angle
+        }
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
