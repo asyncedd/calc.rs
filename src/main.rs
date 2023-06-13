@@ -22,6 +22,7 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
+// Checks if the operator is a operator that is supported
 fn is_valid_operator(operator: &str) -> bool {
     ["+", "-", "*", "/", "^", "sqrt"].contains(&operator)
 }
@@ -31,30 +32,40 @@ fn main() {
     // for both the first and second things, it'll be converted to a 64-bit integer later
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
 
+    // Print the current calculation
     println!("Current calculation: {}", first_thing);
 
+    // Get the operator
     let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt\nPlease enter any of the opreators listed above:");
+    // Trim whitespaces from the operator
     let operator = operator.trim();
 
+    // Use the `is_valid_operator` function to check if it is.
+    // If it returns anything that is not true, error out and return
     if !is_valid_operator(operator) {
         println!("The string is not a valid operator.");
         return;
     }
 
+    // Print the current calculation
     println!("Current calculation: {} {}", first_thing, operator);
 
+    // Define the second_thing varaible before hand.
     let second_thing: f64;
 
+    // If the opertor isn't "sqrt" then, ask for user input
     if operator != "sqrt" {
         second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
+
+        // Print the current calculation again
+        println!(
+            "Current calculation: {} {} {}",
+            first_thing, operator, second_thing
+        );
     } else {
+        // otherwise, define a dummy variable
         second_thing = 69.0
     }
-
-    println!(
-        "Current calculation: {} {} {}",
-        first_thing, operator, second_thing
-    );
 
     // If it matches a:
     let result = match operator {
@@ -81,5 +92,13 @@ fn main() {
         }
     };
 
-    println!("Result: {}", result);
+    // Print the result
+    if operator != "sqrt" {
+        println!(
+            "Result: {} {} {} = {}",
+            first_thing, operator, second_thing, result
+        );
+    } else {
+        println!("Result: {} {} = {}", first_thing, operator, result);
+    }
 }
