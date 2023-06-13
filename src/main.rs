@@ -127,6 +127,6 @@ fn main() {
             first_thing, operator, second_thing, result
         );
     } else {
-        println!("Result: {} {} = {}", first_thing, operator, result);
+        println!("Result: {} of {} = {}", operator, first_thing, result);
     }
 }
