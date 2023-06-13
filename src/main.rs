@@ -30,6 +30,9 @@ fn main() {
     // Declare these variables as strings.
     // for both the first and second things, it'll be converted to a 64-bit integer later
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
+
+    println!("Current calculation: {}", first_thing);
+
     let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt\nPlease enter any of the opreators listed above:");
     let operator = operator.trim();
 
@@ -38,6 +41,8 @@ fn main() {
         return;
     }
 
+    println!("Current calculation: {} {}", first_thing, operator);
+
     let second_thing: f64;
 
     if operator != "sqrt" {
@@ -45,6 +50,11 @@ fn main() {
     } else {
         second_thing = 69.0
     }
+
+    println!(
+        "Current calculation: {} {} {}",
+        first_thing, operator, second_thing
+    );
 
     // If it matches a:
     let result = match operator {
