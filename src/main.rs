@@ -23,14 +23,14 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 fn is_valid_operator(operator: &str) -> bool {
-    ["+", "-", "*", "/", "^"].contains(&operator)
+    ["+", "-", "*", "/", "^", "sqrt"].contains(&operator)
 }
 
 fn main() {
     // Declare these variables as strings.
     // for both the first and second things, it'll be converted to a 64-bit integer later
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
-    let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^\nPlease enter any of the opreators listed above:");
+    let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt\nPlease enter any of the opreators listed above:");
     let operator = operator.trim();
 
     if !is_valid_operator(operator) {
@@ -38,7 +38,13 @@ fn main() {
         return;
     }
 
-    let second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
+    let second_thing: f64;
+
+    if operator != "sqrt" {
+        second_thing = parse_f64(&read_input("Enter the second number to operate on:"));
+    } else {
+        second_thing = 69.0
+    }
 
     // If it matches a:
     let result = match operator {
@@ -57,6 +63,7 @@ fn main() {
             first_thing / second_thing
         }
         "^" => first_thing.powf(second_thing),
+        "sqrt" => first_thing.sqrt(),
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
