@@ -81,6 +81,7 @@ fn main() {
         "*" => first_thing * second_thing,
         // "/" divide
         "/" => {
+            // Check if the second_thing is near zero
             if second_thing.abs() < 1e-9 || first_thing.abs() < 1e-9 {
                 println!("Cannot divide by zero.");
                 return;
