@@ -24,9 +24,9 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 16] = [
+const VALID_OPERATORS: [&str; 17] = [
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
-    "asin", "acos", "ln",
+    "asin", "acos", "ln", "log",
 ];
 
 // Join VALID_OPERATORS into a string at runtime
@@ -137,6 +137,7 @@ fn main() {
         "asin" => first_thing.asin().to_degrees(),
         "acos" => first_thing.acos().to_degrees(),
         "ln" => first_thing.ln(),
+        "log" => first_thing.log(second_thing),
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
