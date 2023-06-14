@@ -93,6 +93,8 @@ fn main() {
         second_thing = 69.0
     }
 
+    let angle_radians = first_thing.to_radians(); // Convert degrees to radians
+
     // If it matches a:
     let result = match operator {
         // "+" add
@@ -112,29 +114,13 @@ fn main() {
         }
         "^" => first_thing.powf(second_thing),
         "sqrt" => first_thing.sqrt(),
-        "sine" => {
-            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
-
-            angle_radians.sin() // Calculate the sine of the angle
-        }
-        "cosine" => {
-            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
-
-            angle_radians.cos() // Calculate the sine of the angle
-        }
-        "tangent" => {
-            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
-
-            angle_radians.tan() // Calculate the sine of the angle
-        }
+        "sine" => angle_radians.sin(), // Calculate the sine of the angle
+        "cosine" => angle_radians.cos(), // Calculate the sine of the angle
+        "tangent" => angle_radians.tan(), // Calculate the sine of the angle
         "abs" => first_thing.abs(),
         "floor" => first_thing.floor(),
         "ceiling" => first_thing.ceil(),
-        "tan" => {
-            let angle_radians = first_thing.to_radians(); // Convert degrees to radians
-
-            angle_radians.tan() // Calculate the sine of the angle
-        }
+        "tan" => angle_radians.tan(), // Calculate the sine of the angle
         "asin" => first_thing.asin().to_degrees(),
         "acos" => first_thing.acos().to_degrees(),
         "ln" => first_thing.ln(),
