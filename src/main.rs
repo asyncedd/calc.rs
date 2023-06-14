@@ -62,7 +62,7 @@ fn main() {
     println!("Enter your operator");
     println!("It can be anything that is:");
     println!("{}", join_valid_operators());
-    let operator = read_input("Please enter any of the opreators listed above:");
+    let operator = read_input("Please enter any of the operators listed above:");
     // Trim whitespaces from the operator
     let operator = operator.trim();
 
