@@ -24,7 +24,9 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 9] = ["+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent"];
+const VALID_OPERATORS: [&str; 11] = [
+    "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor",
+];
 
 // Join VALID_OPERATORS into a string at runtime
 fn join_valid_operators() -> String {
@@ -37,7 +39,7 @@ fn is_valid_operator(operator: &str) -> bool {
 }
 
 // Operators that are single
-const SINGLE_OPERATORS: [&str; 4] = ["sqrt", "sine", "cosine", "tangent"];
+const SINGLE_OPERATORS: [&str; 6] = ["sqrt", "sine", "cosine", "tangent", "abs", "floor"];
 
 // Check if the operators is one defined above
 fn check_if_certain_operator(operator: &str) -> bool {
@@ -121,6 +123,8 @@ fn main() {
 
             angle_radians.tan() // Calculate the sine of the angle
         }
+        "abs" => first_thing.abs(),
+        "floor" => first_thing.floor(),
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
