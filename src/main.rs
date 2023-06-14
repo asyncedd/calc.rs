@@ -26,6 +26,11 @@ fn parse_f64(string: &str) -> f64 {
 // Predefine the operators
 const VALID_OPERATORS: [&str; 9] = ["+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent"];
 
+// Join VALID_OPERATORS into a string at runtime
+fn join_valid_operators() -> String {
+    VALID_OPERATORS.join(", ")
+}
+
 // Checks if the operator is a operator that is supported
 fn is_valid_operator(operator: &str) -> bool {
     VALID_OPERATORS.contains(&operator)
@@ -48,7 +53,10 @@ fn main() {
     println!("Current calculation: {}", first_thing);
 
     // Get the operator
-    let operator = read_input("Enter your operator\nIt can be anything that is: \n+, -, *, /, ^, sqrt, sine, cosine, tangent\nPlease enter any of the opreators listed above:");
+    println!("Enter your operator");
+    println!("It can be anything that is:");
+    println!("{}", join_valid_operators());
+    let operator = read_input("Please enter any of the opreators listed above:");
     // Trim whitespaces from the operator
     let operator = operator.trim();
 
