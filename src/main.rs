@@ -24,8 +24,8 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 11] = [
-    "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor",
+const VALID_OPERATORS: [&str; 12] = [
+    "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling",
 ];
 
 // Join VALID_OPERATORS into a string at runtime
@@ -39,7 +39,9 @@ fn is_valid_operator(operator: &str) -> bool {
 }
 
 // Operators that are single
-const SINGLE_OPERATORS: [&str; 6] = ["sqrt", "sine", "cosine", "tangent", "abs", "floor"];
+const SINGLE_OPERATORS: [&str; 7] = [
+    "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling",
+];
 
 // Check if the operators is one defined above
 fn check_if_certain_operator(operator: &str) -> bool {
@@ -125,6 +127,7 @@ fn main() {
         }
         "abs" => first_thing.abs(),
         "floor" => first_thing.floor(),
+        "ceiling" => first_thing.ceil(),
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
