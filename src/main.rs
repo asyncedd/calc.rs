@@ -24,9 +24,9 @@ fn parse_f64(string: &str) -> f64 {
 }
 
 // Predefine the operators
-const VALID_OPERATORS: [&str; 17] = [
+const VALID_OPERATORS: [&str; 18] = [
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
-    "asin", "acos", "ln", "log",
+    "asin", "acos", "ln", "log", "e ^",
 ];
 
 // Join VALID_OPERATORS into a string at runtime
@@ -40,8 +40,9 @@ fn is_valid_operator(operator: &str) -> bool {
 }
 
 // Operators that are single
-const SINGLE_OPERATORS: [&str; 11] = [
+const SINGLE_OPERATORS: [&str; 12] = [
     "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan", "asin", "acos", "ln",
+    "e ^",
 ];
 
 // Check if the operators is one defined above
@@ -138,6 +139,7 @@ fn main() {
         "acos" => first_thing.acos().to_degrees(),
         "ln" => first_thing.ln(),
         "log" => first_thing.log(second_thing),
+        "e ^" => first_thing.exp(),
         // If it doesn't match any of these, prints an error
         _ => {
             println!("The string is not a valid operator.");
