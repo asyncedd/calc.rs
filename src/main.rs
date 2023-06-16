@@ -1,3 +1,5 @@
+use lazy_static::lazy_static;
+use std::collections::HashSet;
 use std::io;
 
 fn read_input(message: &str) -> String {
@@ -13,7 +15,7 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
-const VALID_OPERATORS: [&str; 23] = [
+const VALID_OPERATORS: &[&str; 23] = &[
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
     "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan",
 ];
@@ -22,17 +24,28 @@ fn join_valid_operators() -> String {
     VALID_OPERATORS.join(", ")
 }
 
-fn is_valid_operator(operator: &str) -> bool {
-    VALID_OPERATORS.contains(&operator)
+lazy_static! {
+    static ref VALID_OPERATORS_SET: HashSet<&'static str> = {
+        let set: HashSet<_> = VALID_OPERATORS.iter().cloned().collect();
+        set
+    };
+    static ref SINGLE_OPERATORS_SET: HashSet<&'static str> = {
+        let set: HashSet<_> = SINGLE_OPERATORS.iter().cloned().collect();
+        set
+    };
 }
 
-const SINGLE_OPERATORS: [&str; 16] = [
+fn is_valid_operator(operator: &str) -> bool {
+    VALID_OPERATORS_SET.contains(operator)
+}
+
+const SINGLE_OPERATORS: &[&str; 16] = &[
     "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan", "asin", "acos", "ln",
     "e ^", "sinh", "cosh", "tanh", "atan",
 ];
 
 fn check_if_certain_operator(operator: &str) -> bool {
-    SINGLE_OPERATORS.contains(&operator)
+    SINGLE_OPERATORS_SET.contains(operator)
 }
 
 fn get_second_thing(operator: &str) -> f64 {

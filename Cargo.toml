@@ -2,3 +2,6 @@
 name = "memory-safe-calculator-written-in-a-language-that-is-both-rusty-and-named-after-a-fungus"
 version = "0.6.9"
 edition = "2021"
+
+[dependencies]
+lazy_static = "1.4.0"
