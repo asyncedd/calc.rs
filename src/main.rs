@@ -79,16 +79,16 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         "floor" => first_thing.floor(),
         "ceiling" => first_thing.ceil(),
         "tan" => angle_radians.tan(),
-        "asin" => first_thing.asin().to_degrees(),
-        "acos" => first_thing.acos().to_degrees(),
+        "asin" => first_thing.asin(),
+        "acos" => first_thing.acos(),
         "ln" => first_thing.ln(),
         "log" => first_thing.log(second_thing),
         "e ^" => first_thing.exp(),
         "sinh" => first_thing.sinh(),
         "cosh" => first_thing.cosh(),
         "tanh" => first_thing.tanh(),
-        "atan2" => first_thing.atan2(second_thing).to_degrees(),
-        "atan" => first_thing.atan().to_degrees(),
+        "atan2" => first_thing.atan2(second_thing),
+        "atan" => first_thing.atan(),
         _ => {
             println!("The string is not a valid operator.");
             0.0
