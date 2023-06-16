@@ -15,9 +15,9 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
-const VALID_OPERATORS: &[&str; 23] = &[
+const VALID_OPERATORS: &[&str; 24] = &[
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
-    "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan",
+    "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan", "primes",
 ];
 
 fn join_valid_operators() -> String {
@@ -54,6 +54,22 @@ fn get_second_thing(operator: &str) -> f64 {
     } else {
         parse_f64(&read_input("Enter the second number to operate on:"))
     }
+}
+
+fn is_prime(num: f64) -> bool {
+    if num < 2.0 {
+        return false;
+    }
+
+    let limit = (num.sqrt()) as u64;
+
+    for i in 2..=limit {
+        if (num - (i as f64)).abs() < 1e-9 {
+            return false;
+        }
+    }
+
+    true
 }
 
 fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64 {
@@ -115,14 +131,25 @@ fn main() {
 
     let second_thing = get_second_thing(operator);
 
-    let result = perform_operation(first_thing, second_thing, operator);
+    if operator != "primes" {
+        let result = perform_operation(first_thing, second_thing, operator);
 
-    if !check_if_certain_operator(operator) {
-        println!(
-            "Result: {} {} {} = {}",
-            first_thing, operator, second_thing, result
-        );
+        if !check_if_certain_operator(operator) {
+            println!(
+                "Result: {} {} {} = {}",
+                first_thing, operator, second_thing, result
+            );
+        } else {
+            println!("Result: {} of {} = {}", operator, first_thing, result);
+        }
     } else {
-        println!("Result: {} of {} = {}", operator, first_thing, result);
+        println!("");
+        println!("Here's your primes:");
+        for n in (first_thing as u64)..=(second_thing as u64) {
+            let prime = n as f64;
+            if is_prime(prime) {
+                println!("{}", prime);
+            }
+        }
     }
 }
