@@ -5,12 +5,16 @@ pub fn parse_f64(string: &str) -> f64 {
 }
 
 pub fn gen_primes(first_thing: usize, second_thing: usize) {
-    println!("\nHere are your primes:");
     let primes = generate_primes(second_thing);
 
-    for prime in primes.iter().filter(|&p| *p >= first_thing) {
-        println!("{}", prime);
-    }
+    let primes_to_print = primes
+        .iter()
+        .filter(|&p| *p >= first_thing)
+        .map(|p| p.to_string())
+        .collect::<Vec<String>>()
+        .join(", ");
+
+    println!("\nHere are your primes: {}", primes_to_print);
 }
 
 pub fn generate_primes(n: usize) -> Vec<usize> {
