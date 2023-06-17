@@ -79,8 +79,6 @@ fn main() {
         return;
     }
 
-    println!("Current calculation: {} {}", first_thing, operator);
-
     let second_thing = get_second_thing(operator);
 
     if !check_if_gen_operator(operator) {
