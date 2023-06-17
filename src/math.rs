@@ -98,8 +98,14 @@ pub fn find_perfect_numbers(count: usize) -> Vec<u64> {
 pub fn print_perfect_numbers(count: f64) {
     let perfect_numbers = find_perfect_numbers(count as usize);
 
-    println!("First {} perfect numbers:", count);
-    for perfect_number in perfect_numbers {
-        println!("{}", perfect_number);
-    }
+    let perfect_numbers_string = perfect_numbers
+        .iter()
+        .map(|&num| num.to_string())
+        .collect::<Vec<String>>()
+        .join(", ");
+
+    println!(
+        "First {} perfect numbers: {}",
+        count, perfect_numbers_string
+    );
 }
