@@ -1,11 +1,14 @@
 mod input;
 mod math;
 mod operators;
+mod shunting;
 
 use colored::Colorize;
+use eval::eval;
 use input::read_input;
 use math::*;
 use operators::*;
+use shunting::*;
 
 fn get_second_thing(operator: &str) -> f64 {
     if check_if_certain_operator(operator) {
@@ -66,38 +69,46 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
 }
 
 fn main() {
-    let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
+    let first_thing = read_input("Enter the first number to operate on:");
+    if is_not_shunting_yard(first_thing.as_str()) {
+        let first_thing = parse_f64(&first_thing.to_string());
+        println!(
+            "Please enter the operator for your calculation\n({})",
+            join_valid_operators().green(),
+        );
+        let binding = read_input("");
+        let operator = binding.trim();
 
-    println!(
-        "Please enter the operator for your calculation\n({})",
-        join_valid_operators().green(),
-    );
-    let binding = read_input("");
-    let operator = binding.trim();
+        if !is_valid_operator(operator) {
+            println!("{}", "The string is not a valid operator.".red());
+            return;
+        }
 
-    if !is_valid_operator(operator) {
-        println!("{}", "The string is not a valid operator.".red());
-        return;
-    }
+        let second_thing = get_second_thing(operator);
 
-    let second_thing = get_second_thing(operator);
+        if !check_if_gen_operator(operator) {
+            let result = perform_operation(first_thing, second_thing, operator);
 
-    if !check_if_gen_operator(operator) {
-        let result = perform_operation(first_thing, second_thing, operator);
-
-        if !check_if_certain_operator(operator) {
-            println!(
-                "{} {} {} {} = {}",
-                "Result:".green(),
-                first_thing,
-                operator,
-                second_thing,
-                result
-            );
+            if !check_if_certain_operator(operator) {
+                println!(
+                    "{} {} {} {} = {}",
+                    "Result:".green(),
+                    first_thing,
+                    operator,
+                    second_thing,
+                    result
+                );
+            } else {
+                println!("Result: {} of {} = {}", operator, first_thing, result);
+            }
         } else {
-            println!("Result: {} of {} = {}", operator, first_thing, result);
+            perform_operation_gen(first_thing, second_thing, operator)
         }
     } else {
-        perform_operation_gen(first_thing, second_thing, operator)
+        if let Ok(result) = eval(first_thing.as_str()) {
+            println!("{}: {}", "Result".green(), result);
+        } else {
+            println!("{}", "Invalid expression".red());
+        }
     }
 }
