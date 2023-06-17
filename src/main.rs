@@ -119,17 +119,34 @@ fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
 fn find_perfect_numbers(count: usize) -> Vec<u64> {
     let mut perfect_numbers = Vec::new();
     let mut number = 2;
+    let mut primes = vec![2]; // Store prime numbers to generate perfect numbers
 
     while perfect_numbers.len() < count {
-        let sum_of_divisors = (1..number)
-            .filter(|divisor| number % divisor == 0)
-            .sum::<u64>();
+        let sqrt = (number as f64).sqrt() as u64;
+        let mut sum_of_divisors = 1;
+
+        // Check divisibility only up to the square root of number
+        for divisor in 2..=sqrt {
+            if number % divisor == 0 {
+                sum_of_divisors += divisor;
+
+                // Add the corresponding divisor greater than the square root
+                if divisor != number / divisor {
+                    sum_of_divisors += number / divisor;
+                }
+            }
+        }
 
         if sum_of_divisors == number {
             perfect_numbers.push(number);
         }
 
         number += 1;
+
+        // Generate prime numbers using the Sieve of Eratosthenes algorithm
+        if primes.iter().all(|prime| number % prime != 0) {
+            primes.push(number);
+        }
     }
 
     perfect_numbers
