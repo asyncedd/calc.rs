@@ -99,7 +99,13 @@ fn main() {
                     result
                 );
             } else {
-                println!("Result: {} of {} = {}", operator, first_thing, result);
+                println!(
+                    "{}: {} of {} = {}",
+                    "Result".green(),
+                    operator,
+                    first_thing,
+                    result
+                );
             }
         } else {
             perform_operation_gen(first_thing, second_thing, operator)

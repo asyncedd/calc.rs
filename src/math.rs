@@ -1,4 +1,5 @@
 // math.rs
+use colored::Colorize;
 
 pub fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
@@ -14,7 +15,7 @@ pub fn gen_primes(first_thing: usize, second_thing: usize) {
         .collect::<Vec<String>>()
         .join(", ");
 
-    println!("\nHere are your primes: {}", primes_to_print);
+    println!("\n{}: {}", "Here are your primes".green(), primes_to_print);
 }
 
 pub fn generate_primes(n: usize) -> Vec<usize> {
@@ -56,7 +57,7 @@ pub fn collatz_sequence(n: f64) {
     .collect::<Vec<String>>()
     .join(" -> ");
 
-    println!("{}", sequence);
+    println!("{}:\n {}", "Here's the collatz sequence".green(), sequence);
 }
 
 pub fn find_perfect_numbers(count: usize) -> Vec<u64> {
@@ -105,8 +106,11 @@ pub fn print_perfect_numbers(count: f64) {
         .join(", ");
 
     println!(
-        "First {} perfect numbers: {}",
-        count, perfect_numbers_string
+        "{} {} {}: {}",
+        "First".green(),
+        count,
+        "perfect numbers".green(),
+        perfect_numbers_string
     );
 }
 
@@ -128,5 +132,10 @@ fn fibonacci(n: u32) -> f64 {
 }
 
 pub fn get_fibonacci(n: u32) {
-    println!("Fibonacci number at position {}: {}", n, fibonacci(n));
+    println!(
+        "{} {}: {}",
+        "Fibonacci number at position".green(),
+        format!("{}", n).green().bold(),
+        fibonacci(n)
+    );
 }
