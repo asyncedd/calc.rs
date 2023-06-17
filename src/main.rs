@@ -67,31 +67,38 @@ fn get_second_thing(operator: &str) -> f64 {
     }
 }
 
-fn is_prime(num: f64) -> bool {
-    if num < 2.0 {
-        return false;
+fn gen_primes(first_thing: usize, second_thing: usize) {
+    println!("\nHere are your primes:");
+    let primes = generate_primes(second_thing);
+
+    for prime in primes.iter().filter(|&p| *p >= first_thing) {
+        println!("{}", prime);
     }
-
-    let limit = (num.sqrt()) as u64;
-
-    for i in 2..=limit {
-        if (num - (i as f64)).abs() < 1e-9 {
-            return false;
-        }
-    }
-
-    true
 }
 
-fn gen_primes(first_thing: f64, second_thing: f64) {
-    println!("");
-    println!("Here's your primes:");
-    for n in (first_thing as u64)..=(second_thing as u64) {
-        let prime = n as f64;
-        if is_prime(prime) {
-            println!("{}", prime);
+fn generate_primes(n: usize) -> Vec<usize> {
+    let mut sieve = vec![true; n + 1];
+    let mut primes = Vec::new();
+
+    sieve[0] = false;
+    sieve[1] = false;
+
+    for p in 2..=(n as f64).sqrt() as usize {
+        if sieve[p] {
+            primes.push(p);
+            for i in (p * p..=n).step_by(p) {
+                sieve[i] = false;
+            }
         }
     }
+
+    for p in ((n as f64).sqrt() as usize + 1)..=n {
+        if sieve[p] {
+            primes.push(p);
+        }
+    }
+
+    primes
 }
 
 fn collatz_sequence(n: f64) {
@@ -109,7 +116,7 @@ fn collatz_sequence(n: f64) {
 
 fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
     match operator {
-        "primes" => gen_primes(first_thing, second_thing),
+        "primes" => gen_primes(first_thing as usize, second_thing as usize),
         "collatz" => collatz_sequence(first_thing),
         "perfect" => print_perfect_numbers(first_thing),
         &_ => todo!(),
