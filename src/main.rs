@@ -67,10 +67,11 @@ fn main() {
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
     println!("Current calculation: {}", first_thing);
 
-    println!("Enter your operator");
-    println!("It can be anything that is:");
-    println!("{}", join_valid_operators());
-    let binding = read_input("Please enter any of the operators listed above:");
+    println!(
+        "Please enter the operator for your calculation ({})",
+        join_valid_operators()
+    );
+    let binding = read_input("");
     let operator = binding.trim();
 
     if !is_valid_operator(operator) {

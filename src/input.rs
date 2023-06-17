@@ -2,7 +2,9 @@
 use std::io;
 
 pub fn read_input(message: &str) -> String {
-    println!("{}", message);
+    if message != "" {
+        println!("{}", message);
+    }
     let mut input = String::new();
     io::stdin()
         .read_line(&mut input)
