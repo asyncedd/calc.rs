@@ -59,7 +59,7 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         "atan2" => first_thing.atan2(second_thing),
         "atan" => first_thing.atan(),
         _ => {
-            println!("The string is not a valid operator.");
+            println!("{}", "The string is not a valid operator.".red());
             0.0
         }
     }
