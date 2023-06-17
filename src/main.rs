@@ -15,10 +15,10 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
-const VALID_OPERATORS: &[&str; 25] = &[
+const VALID_OPERATORS: &[&str; 26] = &[
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
     "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan", "primes",
-    "collatz",
+    "collatz", "perfect",
 ];
 
 fn join_valid_operators() -> String {
@@ -44,12 +44,12 @@ fn is_valid_operator(operator: &str) -> bool {
     VALID_OPERATORS_SET.contains(operator)
 }
 
-const SINGLE_OPERATORS: &[&str; 17] = &[
+const SINGLE_OPERATORS: &[&str; 18] = &[
     "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan", "asin", "acos", "ln",
-    "e ^", "sinh", "cosh", "tanh", "atan", "collatz",
+    "e ^", "sinh", "cosh", "tanh", "atan", "collatz", "perfect",
 ];
 
-const GEN_OPERATORS: &[&str; 2] = &["primes", "collatz"];
+const GEN_OPERATORS: &[&str; 3] = &["primes", "collatz", "perfect"];
 
 fn check_if_certain_operator(operator: &str) -> bool {
     SINGLE_OPERATORS_SET.contains(operator)
@@ -111,7 +111,36 @@ fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
     match operator {
         "primes" => gen_primes(first_thing, second_thing),
         "collatz" => collatz_sequence(first_thing),
+        "perfect" => print_perfect_numbers(first_thing),
         &_ => todo!(),
+    }
+}
+
+fn find_perfect_numbers(count: usize) -> Vec<u64> {
+    let mut perfect_numbers = Vec::new();
+    let mut number = 2;
+
+    while perfect_numbers.len() < count {
+        let sum_of_divisors = (1..number)
+            .filter(|divisor| number % divisor == 0)
+            .sum::<u64>();
+
+        if sum_of_divisors == number {
+            perfect_numbers.push(number);
+        }
+
+        number += 1;
+    }
+
+    perfect_numbers
+}
+
+fn print_perfect_numbers(count: f64) {
+    let perfect_numbers = find_perfect_numbers(count as usize);
+
+    println!("First {} perfect numbers:", count);
+    for perfect_number in perfect_numbers {
+        println!("{}", perfect_number);
     }
 }
 
