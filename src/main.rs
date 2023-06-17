@@ -15,9 +15,10 @@ fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
 }
 
-const VALID_OPERATORS: &[&str; 24] = &[
+const VALID_OPERATORS: &[&str; 25] = &[
     "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
     "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan", "primes",
+    "collatz",
 ];
 
 fn join_valid_operators() -> String {
@@ -33,19 +34,29 @@ lazy_static! {
         let set: HashSet<_> = SINGLE_OPERATORS.iter().cloned().collect();
         set
     };
+    static ref GEN_OPERATORS_SET: HashSet<&'static str> = {
+        let set: HashSet<_> = GEN_OPERATORS.iter().cloned().collect();
+        set
+    };
 }
 
 fn is_valid_operator(operator: &str) -> bool {
     VALID_OPERATORS_SET.contains(operator)
 }
 
-const SINGLE_OPERATORS: &[&str; 16] = &[
+const SINGLE_OPERATORS: &[&str; 17] = &[
     "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan", "asin", "acos", "ln",
-    "e ^", "sinh", "cosh", "tanh", "atan",
+    "e ^", "sinh", "cosh", "tanh", "atan", "collatz",
 ];
+
+const GEN_OPERATORS: &[&str; 2] = &["primes", "collatz"];
 
 fn check_if_certain_operator(operator: &str) -> bool {
     SINGLE_OPERATORS_SET.contains(operator)
+}
+
+fn check_if_gen_operator(operator: &str) -> bool {
+    GEN_OPERATORS_SET.contains(operator)
 }
 
 fn get_second_thing(operator: &str) -> f64 {
@@ -70,6 +81,38 @@ fn is_prime(num: f64) -> bool {
     }
 
     true
+}
+
+fn gen_primes(first_thing: f64, second_thing: f64) {
+    println!("");
+    println!("Here's your primes:");
+    for n in (first_thing as u64)..=(second_thing as u64) {
+        let prime = n as f64;
+        if is_prime(prime) {
+            println!("{}", prime);
+        }
+    }
+}
+
+fn collatz_sequence(n: f64) {
+    println!("{}", n);
+    if n == 1.0 {
+        return;
+    }
+
+    if n % 2.0 == 0.0 {
+        collatz_sequence(n / 2.0);
+    } else {
+        collatz_sequence(3.0 * n + 1.0);
+    }
+}
+
+fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
+    match operator {
+        "primes" => gen_primes(first_thing, second_thing),
+        "collatz" => collatz_sequence(first_thing),
+        &_ => todo!(),
+    }
 }
 
 fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64 {
@@ -131,7 +174,7 @@ fn main() {
 
     let second_thing = get_second_thing(operator);
 
-    if operator != "primes" {
+    if !check_if_gen_operator(operator) {
         let result = perform_operation(first_thing, second_thing, operator);
 
         if !check_if_certain_operator(operator) {
@@ -143,13 +186,6 @@ fn main() {
             println!("Result: {} of {} = {}", operator, first_thing, result);
         }
     } else {
-        println!("");
-        println!("Here's your primes:");
-        for n in (first_thing as u64)..=(second_thing as u64) {
-            let prime = n as f64;
-            if is_prime(prime) {
-                println!("{}", prime);
-            }
-        }
+        perform_operation_gen(first_thing, second_thing, operator)
     }
 }
