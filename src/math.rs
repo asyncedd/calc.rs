@@ -43,16 +43,20 @@ pub fn generate_primes(n: usize) -> Vec<usize> {
 }
 
 pub fn collatz_sequence(n: f64) {
-    println!("{}", n);
-    if n == 1.0 {
-        return;
-    }
+    let sequence = std::iter::successors(Some(n), |&x| {
+        Some(if x == 1.0 {
+            return None;
+        } else if x % 2.0 == 0.0 {
+            x / 2.0
+        } else {
+            3.0 * x + 1.0
+        })
+    })
+    .map(|x| x.to_string())
+    .collect::<Vec<String>>()
+    .join(" -> ");
 
-    if n % 2.0 == 0.0 {
-        collatz_sequence(n / 2.0);
-    } else {
-        collatz_sequence(3.0 * n + 1.0);
-    }
+    println!("{}", sequence);
 }
 
 pub fn find_perfect_numbers(count: usize) -> Vec<u64> {
