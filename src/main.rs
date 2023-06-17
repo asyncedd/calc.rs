@@ -68,7 +68,7 @@ fn main() {
     println!("Current calculation: {}", first_thing);
 
     println!(
-        "Please enter the operator for your calculation ({})",
+        "Please enter the operator for your calculation\n({})",
         join_valid_operators()
     );
     let binding = read_input("");
