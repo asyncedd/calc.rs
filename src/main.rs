@@ -20,6 +20,7 @@ fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
         "primes" => gen_primes(first_thing as usize, second_thing as usize),
         "collatz" => collatz_sequence(first_thing),
         "perfect" => print_perfect_numbers(first_thing),
+        "fibonacci" => get_fibonacci(first_thing as u32),
         &_ => todo!(),
     }
 }

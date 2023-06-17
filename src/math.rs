@@ -109,3 +109,24 @@ pub fn print_perfect_numbers(count: f64) {
         count, perfect_numbers_string
     );
 }
+
+fn fibonacci(n: u32) -> f64 {
+    if n == 0 {
+        return 0.0;
+    } else if n == 1 {
+        return 1.0;
+    }
+
+    let mut fib = (0.0, 1.0);
+
+    for _ in 2..=n {
+        let next = fib.0 + fib.1;
+        fib = (fib.1, next);
+    }
+
+    fib.1
+}
+
+pub fn get_fibonacci(n: u32) {
+    println!("Fibonacci number at position {}: {}", n, fibonacci(n));
+}

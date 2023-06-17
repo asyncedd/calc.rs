@@ -2,18 +2,59 @@
 use lazy_static::lazy_static;
 use std::collections::HashSet;
 
-const VALID_OPERATORS: &[&str; 26] = &[
-    "+", "-", "*", "/", "^", "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan",
-    "asin", "acos", "ln", "log", "e ^", "sinh", "cosh", "tanh", "atan2", "atan", "primes",
-    "collatz", "perfect",
+const VALID_OPERATORS: &[&str; 27] = &[
+    "+",
+    "-",
+    "*",
+    "/",
+    "^",
+    "sqrt",
+    "sine",
+    "cosine",
+    "tangent",
+    "abs",
+    "floor",
+    "ceiling",
+    "tan",
+    "asin",
+    "acos",
+    "ln",
+    "log",
+    "e ^",
+    "sinh",
+    "cosh",
+    "tanh",
+    "atan2",
+    "atan",
+    "primes",
+    "collatz",
+    "perfect",
+    "fibonacci",
 ];
 
-const SINGLE_OPERATORS: &[&str; 18] = &[
-    "sqrt", "sine", "cosine", "tangent", "abs", "floor", "ceiling", "tan", "asin", "acos", "ln",
-    "e ^", "sinh", "cosh", "tanh", "atan", "collatz", "perfect",
+const SINGLE_OPERATORS: &[&str; 19] = &[
+    "sqrt",
+    "sine",
+    "cosine",
+    "tangent",
+    "abs",
+    "floor",
+    "ceiling",
+    "tan",
+    "asin",
+    "acos",
+    "ln",
+    "e ^",
+    "sinh",
+    "cosh",
+    "tanh",
+    "atan",
+    "collatz",
+    "perfect",
+    "fibonacci",
 ];
 
-const GEN_OPERATORS: &[&str; 3] = &["primes", "collatz", "perfect"];
+const GEN_OPERATORS: &[&str; 4] = &["primes", "collatz", "perfect", "fibonacci"];
 
 lazy_static! {
     pub static ref VALID_OPERATORS_SET: HashSet<&'static str> = {
