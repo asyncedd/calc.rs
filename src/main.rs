@@ -69,10 +69,8 @@ fn main() {
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
 
     println!(
-        "Please enter the operator for your calculation\n{}{}{}",
-        "(".bright_black(),
+        "Please enter the operator for your calculation\n({})",
         join_valid_operators().green(),
-        ")".bright_black(),
     );
     let binding = read_input("");
     let operator = binding.trim();
