@@ -2,6 +2,7 @@ mod input;
 mod math;
 mod operators;
 
+use colored::Colorize;
 use input::read_input;
 use math::*;
 use operators::*;
@@ -65,17 +66,18 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
 
 fn main() {
     let first_thing = parse_f64(&read_input("Enter the first number to operate on:"));
-    println!("Current calculation: {}", first_thing);
 
     println!(
-        "Please enter the operator for your calculation\n({})",
-        join_valid_operators()
+        "Please enter the operator for your calculation\n{}{}{}",
+        "(".bright_black(),
+        join_valid_operators().green(),
+        ")".bright_black(),
     );
     let binding = read_input("");
     let operator = binding.trim();
 
     if !is_valid_operator(operator) {
-        println!("The string is not a valid operator.");
+        println!("{}", "The string is not a valid operator.".red());
         return;
     }
 
@@ -86,8 +88,12 @@ fn main() {
 
         if !check_if_certain_operator(operator) {
             println!(
-                "Result: {} {} {} = {}",
-                first_thing, operator, second_thing, result
+                "{} {} {} {} = {}",
+                "Result:".green(),
+                first_thing,
+                operator,
+                second_thing,
+                result
             );
         } else {
             println!("Result: {} of {} = {}", operator, first_thing, result);

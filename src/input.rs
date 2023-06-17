@@ -1,4 +1,5 @@
 // input.rs
+use colored::Colorize;
 use std::io;
 use std::io::Write;
 
@@ -6,7 +7,7 @@ pub fn read_input(message: &str) -> String {
     if message != "" {
         println!("{}", message);
     }
-    print!("> ");
+    print!("{} ", "> ".bright_black());
     io::stdout().flush().unwrap();
 
     let mut input = String::new();
