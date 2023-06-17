@@ -1,15 +1,7 @@
+mod input;
+use input::read_input;
 use lazy_static::lazy_static;
 use std::collections::HashSet;
-use std::io;
-
-fn read_input(message: &str) -> String {
-    println!("{}", message);
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    input.trim().to_string()
-}
 
 fn parse_f64(string: &str) -> f64 {
     string.parse().expect("Invalid number")
