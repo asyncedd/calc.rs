@@ -34,7 +34,7 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         "*" => first_thing * second_thing,
         "/" => {
             if second_thing.abs() < 1e-9 || first_thing.abs() < 1e-9 {
-                println!("Cannot divide by zero.");
+                println!("{}", "Cannot divide by zero.".red());
                 return 0.0;
             }
             first_thing / second_thing
