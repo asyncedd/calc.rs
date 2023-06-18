@@ -128,27 +128,58 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
     }
 }
 
+// the main function
+// the compiler will only run this (btw)
 fn main() {
+    // Ask for the first number and assign it to the first_thing variable
+    // read_input accepts a message and returns a String
+    // the String that is returned is the user input
+    //
+    // eg.
+    //
+    // Enter the first number to operate on, or an expression:
+    // > [USER_INPUT]
+    //
+    // Then, [USER_INPUT] would be returned
     let first_thing = read_input("Enter the first number to operate on, or an expression:");
+    // Check if it's not a shunting yard
     if is_not_shunting_yard(first_thing.as_str()) {
+        // If it is, go ahead and parse it to f64
         let first_thing = parse_f64(&first_thing.to_string());
+        // Ask for the operator (+, -, *, / etc..)
+        //
+        // eg.
+        //
+        // Please enter the operator for your calculation
+        // (+, -, *, / ...) (In reality it'll have more listed.)
         println!(
             "Please enter the operator for your calculation\n({})",
+            // format the join_valid_operators ask green
             join_valid_operators().green(),
         );
+        // Since, we don't need to ask for anything just input ""
         let binding = read_input("");
+        // trim unneeded whitespaces
         let operator = binding.trim();
 
+        // If the string doens't have a valid operator, return
         if !is_valid_operator(operator) {
+            // Print "The string isn't a valid operator" in red
             println!("{}", "The string is not a valid operator.".red());
+            // return, exiting the calculator
             return;
         }
 
+        // Use a function to find the second_thing with some fallbacks
         let second_thing = get_second_thing(operator);
 
+        // Check if it isn't a gen_operator
+        // (primes, etc..)
         if !check_if_gen_operator(operator) {
+            // if it isn't go ahead and perform_operation normally
             let result = perform_operation(first_thing, second_thing, operator);
 
+            // If it isn't an opreator that needs two numbers, print it as below:
             if !check_if_certain_operator(operator) {
                 println!(
                     "{} {} {} {} = {}",
@@ -159,6 +190,7 @@ fn main() {
                     result
                 );
             } else {
+                // Else, print it like:
                 println!(
                     "{}: {} of {} = {}",
                     "Result".green(),
@@ -168,9 +200,11 @@ fn main() {
                 );
             }
         } else {
+            // Otherwise the execute operator_gen.
             perform_operation_gen(first_thing, second_thing, operator)
         }
     } else {
+        // Otherwise, try to calculate the shunting yard using eval crate
         if let Ok(result) = eval(first_thing.as_str()) {
             println!("{}: {}", "Result".green(), result);
         } else {
