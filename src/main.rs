@@ -208,7 +208,7 @@ fn main() {
     } else {
         // Otherwise, try to calculate the shunting yard using eval crate
         if let Ok(result) = eval(first_thing.as_str()) {
-            println!("{}: {} = {}", "Result".green(), first_thing, result);
+            println!("{} {} = {}", "Result:".green(), first_thing, result);
         } else {
             println!("{}", "Invalid expression".red());
         }
