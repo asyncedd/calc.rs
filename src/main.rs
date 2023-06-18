@@ -69,7 +69,7 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
 }
 
 fn main() {
-    let first_thing = read_input("Enter the first number to operate on:");
+    let first_thing = read_input("Enter the first number to operate on, or an expression:");
     if is_not_shunting_yard(first_thing.as_str()) {
         let first_thing = parse_f64(&first_thing.to_string());
         println!(
