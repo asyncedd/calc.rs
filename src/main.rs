@@ -86,6 +86,8 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         }
         // calculation for power of.
         "^" => first_thing.powf(second_thing),
+        // the remaninder of first_thing % second_thing
+        "%" => first_thing % second_thing,
         // calculation for square roots
         // It'll get the square root of first_thing.
         // second_thing is irrelevant since, what are we going to do with it? 🤔

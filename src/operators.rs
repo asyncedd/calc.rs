@@ -2,11 +2,12 @@
 use lazy_static::lazy_static;
 use std::collections::HashSet;
 
-const VALID_OPERATORS: &[&str; 27] = &[
+const VALID_OPERATORS: &[&str; 28] = &[
     "+",
     "-",
     "*",
     "/",
+    "%",
     "^",
     "sqrt",
     "sine",
