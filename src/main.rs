@@ -27,9 +27,7 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         "-" => first_thing - second_thing,
         "*" => first_thing * second_thing,
         "/" => {
-            let epsilon = 1e-9;
-            if second_thing.abs() < epsilon || first_thing.abs() < epsilon {
-                println!("{}", "Cannot divide by zero.".red());
+            if second_thing == 0.0 {
                 return 0.0;
             }
             first_thing / second_thing
@@ -63,7 +61,7 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
 
 fn main() {
     let first_thing = read_input("Enter the first number to operate on, or an expression:");
-    let first_thing = if let Ok(result) = eval(&first_thing) {
+    let first_thing: f64 = if let Ok(result) = eval(&first_thing) {
         parse_f64(&result.to_string())
     } else {
         parse_f64(&first_thing)
