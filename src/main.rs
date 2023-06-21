@@ -11,21 +11,6 @@ use math::*;
 use operators::*;
 use shunting::*;
 
-fn get_second_thing(operator: &str) -> f64 {
-    if check_if_certain_operator(operator) {
-        69.0
-    } else {
-        let second_input = read_input("Enter the second number to operate on:");
-        match eval(second_input.as_str()) {
-            Ok(value) => {
-                let result = parse_f64(&value.to_string());
-                result
-            }
-            Err(_err) => parse_f64(&second_input),
-        }
-    }
-}
-
 fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
     match operator {
         "primes" => gen_primes(first_thing as usize, second_thing as usize),
@@ -122,7 +107,18 @@ fn main() {
             return;
         }
 
-        let second_thing = get_second_thing(operator);
+        let second_thing = if check_if_certain_operator(operator) {
+            69.0
+        } else {
+            let second_input = read_input("Enter the second number to operate on:");
+            match eval(second_input.as_str()) {
+                Ok(value) => {
+                    let result = parse_f64(&value.to_string());
+                    result
+                }
+                Err(_err) => parse_f64(&second_input),
+            }
+        };
 
         // Check if it isn't a gen_operator
         // (primes, etc..)
