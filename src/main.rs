@@ -1,7 +1,6 @@
 mod input;
 mod math;
 mod operators;
-mod shunting;
 
 use colored::Colorize;
 use eval::eval;
@@ -9,7 +8,6 @@ use eval::eval;
 use input::*;
 use math::*;
 use operators::*;
-use shunting::*;
 
 fn perform_operation_gen(first_thing: f64, second_thing: f64, operator: &str) {
     match operator {
@@ -83,80 +81,77 @@ fn main() {
     //
     // Then, [USER_INPUT] would be returned
     let first_thing = read_input("Enter the first number to operate on, or an expression:");
+    let first_thing = if let Ok(result) = eval(&first_thing) {
+        // If it's a valid expression, use the evaluated result
+        parse_f64(&result.to_string())
+    } else {
+        // Otherwise, treat it as a number
+        parse_f64(&first_thing)
+    };
     // Check if it's not a shunting yard
-    if is_not_shunting_yard(first_thing.as_str()) {
-        // If it is, go ahead and parse it to f64
-        let first_thing = parse_f64(&first_thing.to_string());
-        // Ask for the operator (+, -, *, / etc..)
-        //
-        // eg.
-        //
-        // Please enter the operator for your calculation
-        // (+, -, *, / ...) (In reality it'll have more listed.)
-        println!(
-            "Please enter the operator for your calculation\n({})",
-            join_valid_operators().green(),
-        );
-        // Since, we don't need to ask for anything just input ""
-        let binding = read_input("");
-        // trim unneeded whitespaces
-        let operator = binding.trim();
+    // If it is, go ahead and parse it to f64
+    // Ask for the operator (+, -, *, / etc..)
+    //
+    // eg.
+    //
+    // Please enter the operator for your calculation
+    // (+, -, *, / ...) (In reality it'll have more listed.)
+    println!(
+        "Please enter the operator for your calculation\n({})",
+        join_valid_operators().green(),
+    );
+    // Since, we don't need to ask for anything just input ""
+    let binding = read_input("");
+    // trim unneeded whitespaces
+    let operator = binding.trim();
 
-        if !is_valid_operator(operator) {
-            println!("{}", "The string is not a valid operator.".red());
-            return;
+    if !is_valid_operator(operator) {
+        println!("{}", "The string is not a valid operator.".red());
+        return;
+    }
+
+    let second_thing = if check_if_certain_operator(operator) {
+        69.0
+    } else {
+        let second_input = read_input("Enter the second number to operate on:");
+        match eval(second_input.as_str()) {
+            Ok(value) => {
+                let result = parse_f64(&value.to_string());
+                result
+            }
+            Err(_err) => parse_f64(&second_input),
         }
+    };
 
-        let second_thing = if check_if_certain_operator(operator) {
-            69.0
+    // Check if it isn't a gen_operator
+    // (primes, etc..)
+    if !check_if_gen_operator(operator) {
+        // if it isn't go ahead and perform_operation normally
+        let result = perform_operation(first_thing, second_thing, operator);
+
+        // If it isn't an opreator that needs two numbers to operate on, print it as below:
+        if !check_if_certain_operator(operator) {
+            println!(
+                "{} {} {} {} = {}",
+                "Result:".green(),
+                first_thing,
+                operator,
+                second_thing,
+                result
+            );
         } else {
-            let second_input = read_input("Enter the second number to operate on:");
-            match eval(second_input.as_str()) {
-                Ok(value) => {
-                    let result = parse_f64(&value.to_string());
-                    result
-                }
-                Err(_err) => parse_f64(&second_input),
-            }
-        };
-
-        // Check if it isn't a gen_operator
-        // (primes, etc..)
-        if !check_if_gen_operator(operator) {
-            // if it isn't go ahead and perform_operation normally
-            let result = perform_operation(first_thing, second_thing, operator);
-
-            // If it isn't an opreator that needs two numbers to operate on, print it as below:
-            if !check_if_certain_operator(operator) {
-                println!(
-                    "{} {} {} {} = {}",
-                    "Result:".green(),
-                    first_thing,
-                    operator,
-                    second_thing,
-                    result
-                );
-            } else {
-                // Elseif it's an operator that requires two numbers to operte on, print it as
-                // below:
-                println!(
-                    "{}: {} of {} = {}",
-                    "Result".green(),
-                    operator,
-                    first_thing,
-                    result
-                );
-            }
-        } else {
-            // Otherwise the execute operator_gen.
-            perform_operation_gen(first_thing, second_thing, operator)
+            // Elseif it's an operator that requires two numbers to operte on, print it as
+            // below:
+            println!(
+                "{}: {} of {} = {}",
+                "Result".green(),
+                operator,
+                first_thing,
+                result
+            );
         }
     } else {
-        // Otherwise, try to calculate the shunting yard using eval crate
-        if let Ok(result) = eval(first_thing.as_str()) {
-            println!("{} {} = {}", "Result:".green(), first_thing, result);
-        } else {
-            println!("{}", "Invalid expression".red());
-        }
+        // Otherwise the execute operator_gen.
+        perform_operation_gen(first_thing, second_thing, operator)
     }
 }
