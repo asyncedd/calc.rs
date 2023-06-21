@@ -15,7 +15,14 @@ fn get_second_thing(operator: &str) -> f64 {
     if check_if_certain_operator(operator) {
         69.0
     } else {
-        parse_f64(&read_input("Enter the second number to operate on:"))
+        let second_input = read_input("Enter the second number to operate on:");
+        match eval(second_input.as_str()) {
+            Ok(value) => {
+                let result = parse_f64(&value.to_string());
+                result
+            }
+            Err(_err) => parse_f64(&second_input),
+        }
     }
 }
 
