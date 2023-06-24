@@ -68,8 +68,8 @@ fn main() {
     };
 
     println!(
-        r#"Please enter the operator for your calculation
-({})"#,
+        r"Please enter the operator for your calculation
+({})",
         join_valid_operators().green(),
     );
 
