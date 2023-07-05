@@ -59,9 +59,14 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
     }
 }
 
+fn read_number_input(message: &str) -> f64 {
+    let input = read_input(message);
+    eval(&input)
+        .map_or_else(|_| parse_f64(&input), |result| parse_f64(&result.to_string()))
+}
+
 fn main() {
-    let first_thing = read_input("Enter the first number to operate on, or an expression:");
-    let first_thing: f64 = eval(&first_thing).map_or_else(|_| parse_f64(&first_thing), |result| parse_f64(&result.to_string()));
+    let first_thing = read_number_input("Enter the first number to operate on, or an expression:");
 
     println!(
         "Please enter the operator for your calculation\n{}",
@@ -79,9 +84,7 @@ fn main() {
     let second_thing = if check_if_certain_operator(operator) {
         69.0
     } else {
-        let second_input = read_input("Enter the second number to operate on:");
-        eval(second_input.as_str())
-            .map_or_else(|_| parse_f64(&second_input), |value| parse_f64(&value.to_string()))
+        read_number_input("Enter the second number to operate on:")
     };
 
     if !check_if_gen_operator(operator) {
