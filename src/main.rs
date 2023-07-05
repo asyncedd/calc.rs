@@ -54,23 +54,18 @@ fn perform_operation(first_thing: f64, second_thing: f64, operator: &str) -> f64
         "atan" => first_thing.atan(),
         _ => {
             println!("{}", "The string is not a valid operator.".red());
-            0.0
+            return 0.0;
         }
     }
 }
 
 fn main() {
     let first_thing = read_input("Enter the first number to operate on, or an expression:");
-    let first_thing: f64 = if let Ok(result) = eval(&first_thing) {
-        parse_f64(&result.to_string())
-    } else {
-        parse_f64(&first_thing)
-    };
+    let first_thing: f64 = eval(&first_thing).map_or_else(|_| parse_f64(&first_thing), |result| parse_f64(&result.to_string()));
 
     println!(
-        r"Please enter the operator for your calculation
-({})",
-        join_valid_operators().green(),
+        "Please enter the operator for your calculation\n{}",
+        join_valid_operators().green()
     );
 
     let binding = read_input("");
@@ -85,32 +80,17 @@ fn main() {
         69.0
     } else {
         let second_input = read_input("Enter the second number to operate on:");
-        match eval(second_input.as_str()) {
-            Ok(value) => parse_f64(&value.to_string()),
-            Err(_) => parse_f64(&second_input),
-        }
+        eval(second_input.as_str())
+            .map_or_else(|_| parse_f64(&second_input), |value| parse_f64(&value.to_string()))
     };
 
     if !check_if_gen_operator(operator) {
         let result = perform_operation(first_thing, second_thing, operator);
 
         if !check_if_certain_operator(operator) {
-            println!(
-                "{} {} {} {} = {}",
-                "Result:".green(),
-                first_thing,
-                operator,
-                second_thing,
-                result
-            );
+            println!("{} {} {} {} = {}", "Result:".green(), first_thing, operator, second_thing, result);
         } else {
-            println!(
-                "{}: {} of {} = {}",
-                "Result".green(),
-                operator,
-                first_thing,
-                result
-            );
+            println!("{}: {} of {} = {}", "Result".green(), operator, first_thing, result);
         }
     } else {
         perform_operation_gen(first_thing, second_thing, operator)
