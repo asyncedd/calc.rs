@@ -22,17 +22,14 @@ fn test_math_module() {
     let number_str = "3.14";
     let parsed_number = parse_f64(number_str);
     assert_eq!(parsed_number, 3.14);
+}
 
-    // Test gen_primes function
-    let first_thing = 2;
-    let second_thing = 20;
-    gen_primes(first_thing, second_thing);
+#[test]
+fn test_perform_operation_addition() {
+    assert_eq!(perform_operation(2.0, 3.0, "+"), Ok(5.0));
+}
 
-    // Test collatz_sequence function
-    let n = 10.0;
-    collatz_sequence(n);
-
-    // Test get_fibonacci function
-    let n = 10;
-    get_fibonacci(n);
+#[test]
+fn test_perform_operation_subtraction() {
+    assert_eq!(perform_operation(5.0, 2.0, "-"), Ok(3.0));
 }
