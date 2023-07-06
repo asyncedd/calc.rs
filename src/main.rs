@@ -1,6 +1,7 @@
 mod input;
 mod math;
 mod operators;
+mod test;
 
 use colored::Colorize;
 
