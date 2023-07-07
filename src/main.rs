@@ -64,7 +64,7 @@ fn read_number_input(message: &str) -> Result<f64, String> {
         .map_or_else(|_| parse_f64(&input), |result| parse_f64(&result.to_string())))
 }
 
-fn main() {
+fn main_fn() {
     let first_thing = match read_number_input("Enter the first number to operate on, or an expression:") {
         Ok(value) => value,
         Err(err) => {
@@ -113,5 +113,17 @@ fn main() {
         }
     } else {
         perform_operation_gen(first_thing, second_thing, operator)
+    }
+}
+
+fn main() {
+    loop {
+        main_fn();
+
+        let binding = read_input("Continue? (y/n):");
+
+        if binding != "y" && binding != "Y" {
+            return;
+        }
     }
 }
