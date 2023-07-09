@@ -82,9 +82,15 @@ fn main_fn() {
     let operator = binding.trim();
 
     if !is_valid_operator(operator) {
+        print!("\r");
         println!("{}", "The string is not a valid operator.".red());
+        println!("");
+        println!("Please try again!");
+        main_fn();
         return;
     }
+
+    print!("\r");
 
     let second_thing = if check_if_certain_operator(operator) {
         69.0

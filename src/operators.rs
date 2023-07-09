@@ -77,6 +77,8 @@ pub fn join_valid_operators() -> String {
 }
 
 pub fn is_valid_operator(operator: &str) -> bool {
+    println!("");
+    print!("Checking if operator exists...");
     VALID_OPERATORS_SET.contains(operator)
 }
 
